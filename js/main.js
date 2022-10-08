@@ -38,21 +38,40 @@ const email_id = 'email'
 
 const sign_in_link_id = 'sign_in_link'
 const sign_up_form_id = 'sign_up_form'
-// const sign_in_form_id = 'sign_in_form'  // Пригодится
 const sign_up_btn_id = 'sign_up_btn'
+const sign_in_link_id_reg = 'sign_in_link_reg'
 const sign_in_form_id = 'sign_in_form'
 
+
+var btnsgnup = document.getElementById('sign_up_btn');
+btnsgnup.disabled = true;
+
+var btnsgnin = document.getElementById('sign_in_btn');
+btnsgnin.disabled = true;
 
 // Получаем элемент DOM-дерева по id и присваиваем значение аттрибуту oninput
 // oninput вызывается с параметром "event" каждый раз, когда ввод меняется
 // Значение, которое мы присваеваем этому аттрибуту - это функция, определённая в стрелочном стиле
 // Гуглить по тегам "события JS", "onchange/oninput HTML", "стрелочные функции JS", ...
 
-const first_name = document.getElementById(first_name_id);
-first_name.oninput = (e) => setFormValue(first_name_id, e.target.value)  // Установить значение без валидации
+//const first_name = document.getElementById(first_name_id);
+//first_name.oninput = (e) => setFormValue(first_name_id, e.target.value)  // Установить значение без валидации
 
-const email = document.getElementById(email_id);
-email.oninput = (e) => setFormValue(email_id, e.target.value, validateEmail) // Установить значение с валидацией
+//const email = document.getElementById(email_id);
+//email.oninput = (e) => setFormValue(email_id, e.target.value, validateEmail) // Установить значение с валидацией
+
+const emails = document.querySelectorAll("#email, #emailreg")
+console.log(emails)
+for (const email of emails) {
+    email.oninput = (e) => setFormValue(email.id, e.target.value, validateEmail) // Установить значение с валидацией
+}
+
+
+const passwords = document.querySelectorAll("#password, #passwordreg")
+console.log(passwords)
+for (const password of passwords) {
+    password.oninput = (e) => setFormValue(password.id, e.target.value, validatePassword) // Установить значение с валидацией
+}
 
 
 
@@ -62,6 +81,7 @@ const switch_to_sign_in = document.getElementById(sign_in_link_id);
 switch_to_sign_in.onclick = (e) => {
   document.getElementById(sign_up_form_id).style.display = "none"
   document.getElementById(sign_in_form_id).style.display = ""
+  changeFormValidation()
 }
 
 
@@ -71,5 +91,12 @@ sign_up_btn.onclick = (e) => {
   // Чтобы отключить его, нужно отменить стандартное поведение события
   e.preventDefault()
   submitSignUpForm()
+}
+
+const switch_to_sign_in_reg = document.getElementById(sign_in_link_id_reg);
+switch_to_sign_in_reg.onclick = (e) => {
+  document.getElementById(sign_up_form_id).style.display = ""
+  document.getElementById(sign_in_form_id).style.display = "none"
+  changeFormValidation()
 }
 
